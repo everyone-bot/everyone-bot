@@ -24,6 +24,8 @@
   },
   "homepage": "https://github.com/aquibm/everyone-bot#readme",
   "dependencies": {
-    "ava": "^0.17.0"
+    "ava": "^0.17.0",
+    "got": "^6.6.3",
+    "telegram-node-bot": "^4.0.3"
   }
 }
