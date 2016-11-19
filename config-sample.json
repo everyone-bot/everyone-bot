@@ -1,0 +1,4 @@
+{
+    "telegramApiKey": "<< API KEY HERE >>",
+    "botWorkers": 1
+}
