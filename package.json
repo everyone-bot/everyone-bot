@@ -1,0 +1,26 @@
+{
+  "name": "everyone-bot",
+  "version": "0.0.1",
+  "description": "Telegram bot to get everyone's attention in a group chat. Like @everyone in other messaging applications.",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aquibm/everyone-bot.git"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "message",
+    "everyone",
+    "@everyone"
+  ],
+  "author": "Aquib Master",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aquibm/everyone-bot/issues"
+  },
+  "homepage": "https://github.com/aquibm/everyone-bot#readme"
+}
