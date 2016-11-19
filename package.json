@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/aquibm/everyone-bot/issues"
   },
-  "homepage": "https://github.com/aquibm/everyone-bot#readme"
+  "homepage": "https://github.com/aquibm/everyone-bot#readme",
+  "dependencies": {
+    "ava": "^0.17.0"
+  }
 }
