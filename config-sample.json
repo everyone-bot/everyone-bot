@@ -1,4 +1,6 @@
 {
     "telegramApiKey": "<< API KEY HERE >>",
-    "botWorkers": 1
+    "botWorkers": 1,
+    "firebaseProjectName": "myapp-a15sd4",
+    "firebaseDatabaseSecret": "<< FIREBASE DATABASE SECRET >>"
 }

@@ -1,8 +1,16 @@
 'use strict';
 
 const tg = require('telegram-node-bot');
+const arg = require('./util/arg');
 
 class EveryoneController extends tg.TelegramBaseController {
+    constructor(groupRepository) {
+        super();
+
+        arg.checkIfExists(groupRepository, 'groupRepository');
+        this.groupRepository = groupRepository;
+    }
+
     parseMessage(message) {
         const parsed = message
             .replace(/\/everyone\s?(@EveryoneTheBot)?\s?/gmi, '')
@@ -17,7 +25,13 @@ class EveryoneController extends tg.TelegramBaseController {
 
     everyone($) {
         const parsedText = this.parseMessage($.message.text);
-        $.sendMessage(`Hey @aquibm ${parsedText}`);
+
+        this.groupRepository.getMembers($._chatId).then(members => {
+            $.sendMessage(`@${members[0].username} - ${parsedText}`);
+        }).catch(error => {
+            // TOOD(AM): Consider options here: What went wrong?
+            console.log(error);
+        });
     }
 
     in($) {
