@@ -19,9 +19,7 @@ class FirebaseSettings {
     }
 
     buildPath(resource) {
-        if(!resource) {
-            throw new Error('resource not specified');
-        }
+        arg.checkIfNullOrEmpty(resource);
 
         return `https://${this._projectName}.firebaseio.com/${resource}?auth=${this._databaseSecret}`;
     }
