@@ -18,10 +18,10 @@ class FirebaseSettings {
         return this._databaseSecret;
     }
 
-    buildPath(resource) {
+    buildPath(resource, queryParams = '') {
         arg.checkIfNullOrEmpty(resource);
 
-        return `https://${this._projectName}.firebaseio.com/${resource}?auth=${this._databaseSecret}`;
+        return `https://${this._projectName}.firebaseio.com/${resource}?auth=${this._databaseSecret}&${queryParams}`;
     }
 }
 

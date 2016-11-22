@@ -2,6 +2,7 @@
 
 const tg = require('telegram-node-bot');
 const arg = require('./util/arg');
+const User = require('./domain/user');
 
 class EveryoneController extends tg.TelegramBaseController {
     constructor(groupRepository) {
@@ -35,7 +36,10 @@ class EveryoneController extends tg.TelegramBaseController {
     }
 
     in($) {
-        $.sendMessage('You\'re in!');
+        const sender = $._message.from;
+        const user = new User(sender.id, sender.username, 'Bleep', 'Blep');
+        
+        this.groupRepository.optIn($._chatId, user);
     }
 
     out($) {
