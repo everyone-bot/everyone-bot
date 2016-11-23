@@ -1,4 +1,4 @@
-const arg = require('./arg');
+const arg = require('../util/arg');
 
 class FirebaseSettings {
     constructor(projectName, databaseSecret) {

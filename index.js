@@ -2,8 +2,8 @@
 
 const tg = require('telegram-node-bot');
 const GroupRepository = require('./util/groupRepository');
-const FirebaseSettings = require('./util/firebaseSettings');
-const EveryoneController = require('./everyoneController.js');
+const FirebaseSettings = require('./domain/firebaseSettings');
+const EveryoneController = require('./controllers/everyoneController.js');
 
 const config = require('./config.json');
 

@@ -1,8 +1,8 @@
 'use strict';
 
 const tg = require('telegram-node-bot');
-const arg = require('./util/arg');
-const User = require('./domain/user');
+const arg = require('../util/arg');
+const User = require('../domain/user');
 
 class EveryoneController extends tg.TelegramBaseController {
     constructor(groupRepository) {
@@ -27,8 +27,8 @@ class EveryoneController extends tg.TelegramBaseController {
     everyone($) {
         const parsedText = this.parseMessage($.message.text);
 
-        this.groupRepository.getMembers($._chatId).then(members => {
-            $.sendMessage(`@${members[0].username} - ${parsedText}`);
+        this.groupRepository.getMembers($._chatId).then(referralString => {
+            $.sendMessage(`${referralString} - ${parsedText}`);
         }).catch(error => {
             // TOOD(AM): Consider options here: What went wrong?
             console.log(error);
