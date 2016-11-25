@@ -100,7 +100,6 @@ test('checkIfNumber should throw an error with a friendly message', t => {
     t.is(error.message, 'age was not a number');
 });
 
-
 test('should not throw if the supplied value is a positive number', t => {
    t.notThrows(() => {
         arg.checkIfNumber(1);
