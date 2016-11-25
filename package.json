@@ -4,7 +4,10 @@
   "description": "Telegram bot to get everyone's attention in a group chat. Like @everyone in other messaging applications.",
   "main": "index.js",
   "scripts": {
-    "test": "ava"
+    "test": "ava",
+    "test:watch": "npm run test -- --watch",
+    "start": "nodemon .",
+    "dev": "npm-run-all --parallel start test:watch"
   },
   "repository": {
     "type": "git",
@@ -24,8 +27,11 @@
   },
   "homepage": "https://github.com/aquibm/everyone-bot#readme",
   "dependencies": {
-    "ava": "^0.17.0",
     "got": "^6.6.3",
+    "npm-run-all": "^3.1.1",
     "telegram-node-bot": "^4.0.3"
+  },
+  "devDependencies": {
+    "ava": "^0.17.0"
   }
 }
