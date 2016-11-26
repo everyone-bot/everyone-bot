@@ -9,7 +9,7 @@ class GroupRepository {
     }
 
     getMembers(groupId) {
-        arg.checkIfNumber(groupId);
+        arg.checkIfNumber(groupId, 'groupId');
 
         const path = this.firebaseSettings.buildPath(`groups/${groupId}/members.json`);
 
@@ -24,7 +24,7 @@ class GroupRepository {
 
             return referralString;
         }).catch(error => {
-            // TODO(AM): Should write this to a log.
+            // TODO(AM): Persistent logging.
             console.log(error.response.body);
         });
     }
@@ -48,6 +48,18 @@ class GroupRepository {
                 });
             }
         }).catch(error => {
+            // TODO(AM): Persistent logging.
+            console.log(error);
+        });
+    }
+
+    optOut(groupId, userId) {
+        arg.checkIfNumber(groupId, 'groupId');
+        arg.checkIfNumber(userId, 'userId');
+
+        const path = this.firebaseSettings.buildPath(`/groups/${groupId}/members/${userId}.json`);
+        got.delete(path).catch(error => {
+            // TODO(AM): Persistent logging.
             console.log(error);
         });
     }

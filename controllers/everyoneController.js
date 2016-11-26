@@ -43,7 +43,10 @@ class EveryoneController extends tg.TelegramBaseController {
     }
 
     out($) {
-        $.sendMessage('Boo');
+        const groupId = $._chatId;
+        const userId = $._message.from.id;
+
+        this.groupRepository.optOut(groupId, userId);
     }
 
     get routes() {
