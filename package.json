@@ -6,8 +6,9 @@
   "scripts": {
     "test": "ava",
     "test:watch": "npm run test -- --watch",
-    "start": "nodemon .",
-    "dev": "npm-run-all --parallel start test:watch"
+    "start": "node .",
+    "start:dev": "nodemon .",
+    "dev": "npm-run-all --parallel start:dev test:watch"
   },
   "repository": {
     "type": "git",
