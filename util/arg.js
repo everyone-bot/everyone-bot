@@ -7,7 +7,7 @@ module.exports = {
      */
     checkIfExists(val, valName) {
         if(typeof val === 'undefined') {
-            throw new Error(`${valName} does not exist`);
+            throw new SyntaxError(`${valName} does not exist`);
         }
     },
 
@@ -21,7 +21,7 @@ module.exports = {
         this.checkIfExists(val, valName);
 
         if(val === null || !val.length) {
-            throw new Error(`${valName} was null or empty`);
+            throw new SyntaxError(`${valName} was null or empty`);
         }
     },
 
@@ -35,7 +35,7 @@ module.exports = {
         this.checkIfExists(val, valName);
 
         if(typeof val !== 'number') {
-            throw new Error(`${valName} was not a number`);
+            throw new SyntaxError(`${valName} was not a number`);
         }
     }
 }
