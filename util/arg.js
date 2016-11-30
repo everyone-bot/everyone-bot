@@ -1,10 +1,22 @@
 module.exports = {
+    /**
+     * @param  {Any} val - Thing to check
+     * @param  {String} valName - Name of the thing to check
+     * @return {Void}
+     * @throws {Error} If val does not exist
+     */
     checkIfExists(val, valName) {
         if(typeof val === 'undefined') {
             throw new Error(`${valName} does not exist`);
         }
     },
 
+    /**
+     * @param  {Any} val - Thing to check
+     * @param  {String} valName - Name of the thing to check
+     * @return {Void}
+     * @throws {Error} If val does not exist or is null or empty
+     */
     checkIfNullOrEmpty(val, valName) {
         this.checkIfExists(val, valName);
 
@@ -13,6 +25,12 @@ module.exports = {
         }
     },
 
+    /**
+     * @param  {Any} val - Thing to check
+     * @param  {String} valName - Name of the thing to check
+     * @return {Void}
+     * @throws {Error} If val does not exist or is not a number
+     */
     checkIfNumber(val, valName) {
         this.checkIfExists(val, valName);
 
