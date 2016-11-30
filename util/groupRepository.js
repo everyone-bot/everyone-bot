@@ -1,81 +1,104 @@
 const got = require('got');
 const arg = require('./arg');
+const User = require('../domain/user');
+const Group = require('../domain/group');
 
+/**
+ * Responsible for integrating with Firebase to save and load group inforamtion.
+ */
 class GroupRepository {
+    /**
+     * @param  {FirebaseSettings} firebaseSettings
+     * @return {GroupRepository}
+     */
     constructor(firebaseSettings) {
         arg.checkIfExists(firebaseSettings, 'firebaseSettings');
-
         this.firebaseSettings = firebaseSettings;
     }
 
-    getMembers(groupId) {
+    /**
+     * @param  {Number} groupId - Unique telegram identifier for a group.
+     * @return {Promise<Group>}
+     */
+    getGroup(groupId) {
         arg.checkIfNumber(groupId, 'groupId');
 
-        const path = this.firebaseSettings.buildPath(`groups/${groupId}/members.json`);
+        const path = this.firebaseSettings.buildPath(`groups/${groupId}.json`);
 
         return got(path).then(response => {
-            let members = JSON.parse(response.body);
+            const group = JSON.parse(response.body);
 
-            const referralString = Object.keys(members).reduce((acc, key) => {
-                return `@${members[key].username} ${acc}`;
-            }, '');
-
-            console.log(referralString);
-
-            return referralString;
-        }).catch(error => {
-            // TODO(AM): Persistent logging.
-            console.log(error.response.body);
-        });
-    }
-
-    optIn(groupId, user) {
-        arg.checkIfNumber(groupId, 'groupId');
-        arg.checkIfExists(user, 'user');
-
-        this.userExistsInGroup(groupId, user.id).then(exists => {
-            if(!exists) {
-                const path = this.firebaseSettings.buildPath(`groups/${groupId}/members/${user.id}.json`);
-                const userData = {
-                    id: user.id,
-                    username: user.username,
-                    firstName: user.firstName,
-                    lastName: user.lastName
-                };
-
-                got.patch(path, {
-                    body: JSON.stringify(userData)
-                });
+            if(!group.members) {
+                return new Group(groupId, []);
             }
-        }).catch(error => {
-            // TODO(AM): Persistent logging.
-            console.log(error);
+
+            const users = Object.keys(group.members).map(userId => {
+                const user = group.members[userId];
+
+                if(!user.optIn) {
+                    return;
+                }
+
+                return new User(user.id, user.username, user.firstName, user.lastName);
+            }).filter(user => {
+                return !!user;
+            });
+
+            return new Group(groupId, users);
+        }).catch(err => {
+            throw err;
         });
     }
 
-    optOut(groupId, userId) {
+    /**
+     * Associates a user with a group and opt's them in to receiving messages.
+     * @param  {User} user - A telegram user.
+     * @param  {Number} groupId - A unique telegram group ID
+     * @return {Promise<Void>}
+     */
+    optIn(user, groupId) {
+        arg.checkIfExists(user, 'user');
         arg.checkIfNumber(groupId, 'groupId');
-        arg.checkIfNumber(userId, 'userId');
 
-        const path = this.firebaseSettings.buildPath(`/groups/${groupId}/members/${userId}.json`);
-        got.delete(path).catch(error => {
-            // TODO(AM): Persistent logging.
-            console.log(error);
+        const path = this.firebaseSettings.buildPath(`groups/${groupId}/members/${user.id}.json`);
+        const payload = JSON.stringify({
+            id: user.id,
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            optIn: true
+        });
+        
+        return got.patch(path, {
+            body: payload
+        }).catch(err => {
+            throw err;
         });
     }
 
-    userExistsInGroup(groupId, userId) {
+    /**
+     * Associates a user with a group and opt's them out of receiving messages.
+     * @param  {User} user - A telegram user.
+     * @param  {Number} groupId - A unique telegram group ID
+     * @return {Promise<Void>}
+     */
+    optOut(user, groupId) {
+        arg.checkIfExists(user, 'user');
         arg.checkIfNumber(groupId, 'groupId');
-        arg.checkIfNumber(userId, 'userId');
 
-        const path = this.firebaseSettings.buildPath(`groups/${groupId}/members.json`,
-            `orderBy="id"&startAt=${userId}&endAt=${userId}`);
+        const path = this.firebaseSettings.buildPath(`groups/${groupId}/members/${user.id}.json`);
+        const payload = JSON.stringify({
+            id: user.id,
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            optIn: false
+        });
 
-        return got(path).then(response => {
-            let user = JSON.parse(response.body);
-            return typeof user.id !== 'undefined';
-        }).catch(error => {
-            console.log(error.response.body);
+        return got.patch(path, {
+            body: payload
+        }).catch(err => {
+            throw err;
         });
     }
 }
