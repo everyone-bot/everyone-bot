@@ -13,7 +13,10 @@ const firebaseSettings = new FirebaseSettings(settings.firebaseProjectName, sett
 const groupRepository = new GroupRepository(firebaseSettings);
 
 const bot = new tg.Telegram(settings.telegramApiKey, {
-    workers: settings.botWorkers
+    workers: settings.botWorkers,
+    webAdmin: {
+        port: process.env.PORT || 7777
+    }
 });
 
 bot.router
