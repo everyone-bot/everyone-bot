@@ -12,41 +12,61 @@ class EveryoneController extends tg.TelegramBaseController {
         this.groupRepository = groupRepository;
     }
 
-    parseMessage(message) {
-        const parsed = message
-            .replace(/\/everyone\s?(@EveryoneTheBot)?\s?/gmi, '')
-            .trim();
-
-        if(!parsed.length) {
-            throw new Error('No message found');
-        }
-
-        return parsed;
-    }
-
     everyone($) {
-        const parsedText = this.parseMessage($.message.text);
+        this.groupRepository.getGroup($._chatId).then(group => {
+            if(!group.users.length) {
+                $.sendMessage('No users opted in!');
+                return;
+            }
 
-        this.groupRepository.getMembers($._chatId).then(referralString => {
-            $.sendMessage(`${referralString} - ${parsedText}`);
-        }).catch(error => {
-            // TOOD(AM): Consider options here: What went wrong?
-            console.log(error);
+            const message = group.users.reduce((accumulator, user) => {
+                return `@${user.username} ${accumulator}`;
+            }, '');
+
+            $.sendMessage(message);
+        }).catch(err => {
+            console.log(err);
         });
     }
 
     in($) {
-        const sender = $._message.from;
-        const user = new User(sender.id, sender.username, 'Bleep', 'Blep');
-        
-        this.groupRepository.optIn($._chatId, user);
+        try {
+            const sender = $._message.from;
+            const user = new User(sender.id, sender.username, sender.firstName, sender.lastName);
+            const groupId = $._chatId;
+            
+            this.groupRepository.optIn(user, groupId).then(() => {
+                $.sendMessage(`Thanks for opting in @${user.username}`);
+            }).catch(err => {
+                console.log(err);
+            });
+        } catch(error) {
+            if(error instanceof SyntaxError) {
+                $.sendMessage('Sorry, you\'ll need to set up a username before you can opt in');
+            }
+
+            console.log(error);
+        }
     }
 
     out($) {
-        const groupId = $._chatId;
-        const userId = $._message.from.id;
+        try {
+            const sender = $._message.from;
+            const user = new User(sender.id, sender.username, sender.firstName, sender.lastName);
+            const groupId = $._chatId;
 
-        this.groupRepository.optOut(groupId, userId);
+            this.groupRepository.optOut(user, groupId).then(() => {
+                $.sendMessage(`You've been opted out @${user.username}`)
+            }).catch(err => {
+                console.log(err);
+            });
+        } catch(error) {
+            if(error instanceof SyntaxError) {
+                $.sendMessage('Sorry, you\'ll need to set up a username before you can opt in');
+            }
+
+            console.log(error);
+        }
     }
 
     get routes() {

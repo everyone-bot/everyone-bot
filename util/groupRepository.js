@@ -28,7 +28,7 @@ class GroupRepository {
         return got(path).then(response => {
             const group = JSON.parse(response.body);
 
-            if(!group.members) {
+            if(!group || !group.members) {
                 return new Group(groupId, []);
             }
 
@@ -46,7 +46,7 @@ class GroupRepository {
 
             return new Group(groupId, users);
         }).catch(err => {
-            throw err;
+            console.log(err);
         });
     }
 
@@ -72,7 +72,7 @@ class GroupRepository {
         return got.patch(path, {
             body: payload
         }).catch(err => {
-            throw err;
+            console.log(err);
         });
     }
 
@@ -98,7 +98,7 @@ class GroupRepository {
         return got.patch(path, {
             body: payload
         }).catch(err => {
-            throw err;
+            console.log(err);
         });
     }
 }
