@@ -5,10 +5,10 @@ const arg = require('../util/arg');
  */
 class User {
     /**
-     * @param  {Number}
-     * @param  {String}
-     * @param  {String}
-     * @param  {String}
+     * @param  {Number} id - Numeric ID of the user.
+     * @param  {String} username - Telegram username, without the @
+     * @param  {String} firstName - The first name of the user.
+     * @param  {String} lastName - The last name of the user.
      * @return {User}
      */
     constructor(id, username, firstName, lastName) {

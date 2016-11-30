@@ -5,8 +5,8 @@ const arg = require('../util/arg');
  */
 class FirebaseSettings {
     /**
-     * @param  {String}
-     * @param  {String}
+     * @param  {String} projectName - Firebase project name.
+     * @param  {String} databaseSecret - Secret used to access the firebase realtime database.
      * @return {FirebaseSettings}
      */
     constructor(projectName, databaseSecret) {
@@ -32,8 +32,8 @@ class FirebaseSettings {
     }
 
     /**
-     * @param  {String}
-     * @param  {String}
+     * @param  {String} resoruce - Path in the firebase object being retrieved.
+     * @param  {String} queryParams - Optional firebase query params for filtering, sorting, etc.
      * @return {String}
      */
     buildPath(resource, queryParams = '') {
