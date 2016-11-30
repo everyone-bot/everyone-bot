@@ -1,20 +1,39 @@
+/**
+ * Responsible for providing application settings through either environment variables or a config file.
+ */
 class SettingsRepository {
+    /**
+     * @param  {Object} config - Contents of a configuration file to use when environemnt variables are not available.
+     * @return {SettingsRepository}
+     */
     constructor(config) {
         this._config = config;
     }
 
+    /**
+     * @return {String}
+     */
     get telegramApiKey() {
         return process.env.TELEGRAM_API_KEY || this._config.telegramApiKey;
     }
 
+    /**
+     * @return {Number}
+     */
     get botWorkers() {
         return process.env.BOT_WORKERS ? Number.parseInt(process.env.BOT_WORKERS, 10) : this._config.botWorkers;
     }
 
+    /**
+     * @return {String}
+     */
     get firebaseProjectName() {
         return process.env.FIREBASE_PROJECT_NAME || this._config.firebaseProjectName;
     }
 
+    /**
+     * @return {String}
+     */
     get firebaseDatabaseSecret() {
         return process.env.FIREBASE_DATABASE_SECRET || this._config.firebaseDatabaseSecret;
     }
