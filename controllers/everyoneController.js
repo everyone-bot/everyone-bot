@@ -32,7 +32,7 @@ class EveryoneController extends tg.TelegramBaseController {
     in($) {
         try {
             const sender = $._message.from;
-            const user = new User(sender.id, sender.username, sender.firstName, sender.lastName);
+            const user = new User(sender.id, sender.username);
             const groupId = $._chatId;
             
             this.groupRepository.optIn(user, groupId).then(() => {
@@ -46,13 +46,14 @@ class EveryoneController extends tg.TelegramBaseController {
             }
 
             console.log(error);
+            return;
         }
     }
 
     out($) {
         try {
             const sender = $._message.from;
-            const user = new User(sender.id, sender.username, sender.firstName, sender.lastName);
+            const user = new User(sender.id, sender.username);
             const groupId = $._chatId;
 
             this.groupRepository.optOut(user, groupId).then(() => {
@@ -66,6 +67,7 @@ class EveryoneController extends tg.TelegramBaseController {
             }
 
             console.log(error);
+            return;
         }
     }
 

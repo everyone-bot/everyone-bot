@@ -39,7 +39,7 @@ class GroupRepository {
                     return;
                 }
 
-                return new User(user.id, user.username, user.firstName, user.lastName);
+                return new User(user.id, user.username);
             }).filter(user => {
                 return !!user;
             });
