@@ -29,6 +29,7 @@
   "homepage": "https://github.com/aquibm/everyone-bot#readme",
   "dependencies": {
     "got": "^6.6.3",
+    "nock": "^9.0.2",
     "npm-run-all": "^3.1.1",
     "telegram-node-bot": "^4.0.3"
   },
