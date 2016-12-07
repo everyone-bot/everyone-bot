@@ -16,18 +16,16 @@ const optOutMock = nock('https://example.firebaseio.com')
 const getGroupMock = nock('https://example.firebaseio.com')
     .get('/groups/1234.json?auth=database-key')
     .reply(200, {
-        "1234": {
-            "members": {
-                "1": {
-                    "id": 1,
-                    "username": "aquibm",
-                    "optIn": true
-                },
-                "2": {
-                    "id": 2,
-                    "username": "not-aquibm",
-                    "optIn": false
-                }
+        "members": {
+            "1": {
+                "id": 1,
+                "username": "aquibm",
+                "optIn": true
+            },
+            "2": {
+                "id": 2,
+                "username": "not-aquibm",
+                "optIn": false
             }
         }
     });
@@ -112,9 +110,8 @@ test('getGroup should throw if groupId is not a number', async t => {
     });
 });
 
-// TODO(AM): Fix this test.
 test('getGroup should get and process groups', async t => {
     const group = await t.context.repo.getGroup(1234);
-    console.log(group);
     t.is(getGroupMock.isDone(), true);
+    t.is(group.users.length, 1);
 });
