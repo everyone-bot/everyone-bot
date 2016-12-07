@@ -64,8 +64,6 @@ class GroupRepository {
         const payload = JSON.stringify({
             id: user.id,
             username: user.username,
-            firstName: user.firstName,
-            lastName: user.lastName,
             optIn: true
         });
         
@@ -90,8 +88,6 @@ class GroupRepository {
         const payload = JSON.stringify({
             id: user.id,
             username: user.username,
-            firstName: user.firstName,
-            lastName: user.lastName,
             optIn: false
         });
 
