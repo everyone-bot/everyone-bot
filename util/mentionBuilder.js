@@ -6,7 +6,7 @@ class MentionBuilder {
     }
 
     build(users) {
-        return this.settings.mentionsPerMessage;
+        arg.checkIfArray(users, 'users');
     }
 }
 
