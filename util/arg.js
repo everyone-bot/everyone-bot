@@ -37,5 +37,18 @@ module.exports = {
         if(typeof val !== 'number') {
             throw new SyntaxError(`${valName} was not a number`);
         }
+    },
+
+    /**
+     * @param  {Any} val - The parameter being tested.
+     * @param  {String} valName - The name of the paramter being tested.
+     * @throws {SyntaxError} If val is not an array.
+     */
+    checkIfArray(val, valName) {
+        this.checkIfExists(val, valName);
+
+        if(val.constructor !== Array) {
+            throw new SyntaxError(`${valName} was not an array`);
+        }
     }
 }
