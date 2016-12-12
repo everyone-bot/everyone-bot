@@ -5,7 +5,8 @@ const stubConfig = {
     "telegramApiKey": "TELEGRAM_API_KEY",
     "botWorkers": 1,
     "firebaseProjectName": "FIREBASE_PROJECT_NAME",
-    "firebaseDatabaseSecret": "FIREBASE_DATABASE_SECRET"
+    "firebaseDatabaseSecret": "FIREBASE_DATABASE_SECRET",
+    "mentionsPerMessage": 5
 };
 
 test.beforeEach(t => {
@@ -19,6 +20,7 @@ test('should return config values when environment variables don\'t exist', t =>
     t.is(settings.botWorkers, stubConfig.botWorkers);
     t.is(settings.firebaseProjectName, stubConfig.firebaseProjectName);
     t.is(settings.firebaseDatabaseSecret, stubConfig.firebaseDatabaseSecret);
+    t.is(settings.mentionsPerMessage, stubConfig.mentionsPerMessage);
 });
 
 test('should prefer environment variables', t => {
@@ -28,9 +30,11 @@ test('should prefer environment variables', t => {
     process.env.BOT_WORKERS = 0;
     process.env.FIREBASE_PROJECT_NAME = 'env-firebase-project-name';
     process.env.FIREBASE_DATABASE_SECRET = 'env-firebase-database-secret';
+    process.env.MENTIONS_PER_MESSAGE = 1;
 
     t.is(settings.telegramApiKey, 'env-telegram-api-key');
     t.is(settings.botWorkers, 0);
     t.is(settings.firebaseProjectName, 'env-firebase-project-name');
     t.is(settings.firebaseDatabaseSecret, 'env-firebase-database-secret');
+    t.is(settings.mentionsPerMessage, 1);
 });

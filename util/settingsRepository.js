@@ -37,6 +37,13 @@ class SettingsRepository {
     get firebaseDatabaseSecret() {
         return process.env.FIREBASE_DATABASE_SECRET || this._config.firebaseDatabaseSecret;
     }
+
+    /**
+     * @return {string}
+     */
+    get mentionsPerMessage() {
+        return process.env.MENTIONS_PER_MESSAGE ? Number.parseInt(process.env.MENTIONS_PER_MESSAGE, 10) : this._config.mentionsPerMessage;
+    }
 }
 
 module.exports = SettingsRepository;
