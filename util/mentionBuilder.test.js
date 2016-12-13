@@ -53,10 +53,24 @@ test('can chunk users into two even groups', t => {
     t.is(messages.length, 2);
 });
 
-test('can chunk users into three un-even groups', t => {
-    const users = new TestUserBuilder().buildMany(process.env.MENTIONS_PER_MESSAGE + 2);
+test('can chunk users into two un-even groups', t => {
+    const users = new TestUserBuilder().buildMany(process.env.MENTIONS_PER_MESSAGE);
 
     const messages = t.context.builder.build(users);
 
+    console.log(users);
+    console.log(messages);
     t.is(messages.length, 2);
+});
+
+test('can chunk users into three un-even groups', t => {
+    const users = new TestUserBuilder().buildMany((process.env.MENTIONS_PER_MESSAGE * 2) + 2);
+
+    const messages = t.context.builder.build(users);
+
+    t.is(messages.length, 3);
+});
+
+test('should not mutate users', t => {
+    
 });
