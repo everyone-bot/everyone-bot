@@ -23,22 +23,40 @@ test('should throw if users is not an array', t => {
     });
 });
 
+test('should throw if an empty users array is supplied', t => {
+    t.throws(() => {
+        t.context.builder.build([]);
+    });
+});
+
 test('can chunk the same amount of users as mentions per message', t => {
-    
+    const users = new TestUserBuilder().buildMany(process.env.MENTIONS_PER_MESSAGE);
+
+    const messages = t.context.builder.build(users);
+
+    t.is(messages.length, 1);
 });
 
 test('can chunk fewer users than mentions per message', t => {
-    
+    const users = new TestUserBuilder().buildMany(process.env.MENTIONS_PER_MESSAGE - 2);
+
+    const messages = t.context.builder.build(users);
+
+    t.is(messages.length, 1);
 });
 
 test('can chunk users into two even groups', t => {
-    
+    const users = new TestUserBuilder().buildMany(process.env.MENTIONS_PER_MESSAGE * 2);
+
+    const messages = t.context.builder.build(users);
+
+    t.is(messages.length, 2);
 });
 
 test('can chunk users into three un-even groups', t => {
-    
-});
+    const users = new TestUserBuilder().buildMany(process.env.MENTIONS_PER_MESSAGE + 2);
 
-test('should not throw when chunking a group of no users', t => {
-    
+    const messages = t.context.builder.build(users);
+
+    t.is(messages.length, 2);
 });
