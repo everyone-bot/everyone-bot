@@ -5,10 +5,12 @@ const MentionBuilder = require('./mentionBuilder');
 const TestUserBuilder = require('./testUserBuilder');
 
 test.beforeEach(t => {
-    process.env.MENTIONS_PER_MESSAGE = 5;
+    process.env.MENTIONS_PER_MESSAGE = '5';
 
     const settings = new SettingsRepository({});
+
     t.context.builder = new MentionBuilder(settings);
+    t.context.chunkSize = settings.mentionsPerMessage;
 });
 
 test('should throw if users is undefined', t => {
@@ -30,7 +32,7 @@ test('should throw if an empty users array is supplied', t => {
 });
 
 test('can chunk the same amount of users as mentions per message', t => {
-    const users = new TestUserBuilder().buildMany(process.env.MENTIONS_PER_MESSAGE);
+    const users = new TestUserBuilder().buildMany(t.context.chunkSize);
 
     const messages = t.context.builder.build(users);
 
@@ -38,7 +40,7 @@ test('can chunk the same amount of users as mentions per message', t => {
 });
 
 test('can chunk fewer users than mentions per message', t => {
-    const users = new TestUserBuilder().buildMany(process.env.MENTIONS_PER_MESSAGE - 2);
+    const users = new TestUserBuilder().buildMany(t.context.chunkSize - 2);
 
     const messages = t.context.builder.build(users);
 
@@ -46,7 +48,7 @@ test('can chunk fewer users than mentions per message', t => {
 });
 
 test('can chunk users into two even groups', t => {
-    const users = new TestUserBuilder().buildMany(process.env.MENTIONS_PER_MESSAGE * 2);
+    const users = new TestUserBuilder().buildMany(t.context.chunkSize * 2);
 
     const messages = t.context.builder.build(users);
 
@@ -54,17 +56,15 @@ test('can chunk users into two even groups', t => {
 });
 
 test('can chunk users into two un-even groups', t => {
-    const users = new TestUserBuilder().buildMany(process.env.MENTIONS_PER_MESSAGE);
+    const users = new TestUserBuilder().buildMany((t.context.chunkSize * 2) - 2);
 
     const messages = t.context.builder.build(users);
 
-    console.log(users);
-    console.log(messages);
     t.is(messages.length, 2);
 });
 
 test('can chunk users into three un-even groups', t => {
-    const users = new TestUserBuilder().buildMany((process.env.MENTIONS_PER_MESSAGE * 2) + 2);
+    const users = new TestUserBuilder().buildMany((t.context.chunkSize * 2) + 2);
 
     const messages = t.context.builder.build(users);
 
@@ -72,5 +72,34 @@ test('can chunk users into three un-even groups', t => {
 });
 
 test('should not mutate users', t => {
-    
+    const users = new TestUserBuilder().buildMany(t.context.chunkSize);
+
+    const messages = t.context.builder.build(users);
+
+    t.is(messages.length, 1);
+    t.is(users.length, t.context.chunkSize);
+});
+
+test('should return sendable messages', t => {
+    const users = new TestUserBuilder().buildMany(t.context.chunkSize);
+
+    const messages = t.context.builder.build(users);
+
+    messages.forEach(message => {
+        t.is(typeof message, 'string');
+    });
+});
+
+test('should contain users in the returned messages', t => {
+    const users = new TestUserBuilder().buildMany(t.context.chunkSize + 4);
+
+    const messages = t.context.builder.build(users);
+
+    users.forEach(user => {
+        const mention = messages.find(message => {
+            return message.indexOf(user.username) !== -1;
+        });
+
+        t.not(mention, undefined);
+    });
 });

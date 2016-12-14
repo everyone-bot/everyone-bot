@@ -14,7 +14,11 @@ class MentionBuilder {
 
         const userChunks = this._chunkUsers(users, this.settings.mentionsPerMessage);
 
-        return userChunks;
+        return userChunks.map(chunk => {
+            return chunk.reduce((accumulator, user) => {
+                return `@${user.username} ${accumulator}`;
+            }, '');
+        });
     }
 
     _chunkUsers(users, size) {
