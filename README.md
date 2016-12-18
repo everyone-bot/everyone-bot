@@ -1,5 +1,5 @@
 # Everyone Bot
-Telegram bot to get everyone's attention in a group chat. Like @everyone in other messaging applications.
+Telegram bot to get everyone's attention in a group chat. Like `@everyone` in other messaging applications.
 
 ## Use
 Use the hosted bot, or host your own!
