@@ -1,6 +1,6 @@
 {
   "name": "everyone-bot",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Telegram bot to get everyone's attention in a group chat. Like @everyone in other messaging applications.",
   "main": "index.js",
   "scripts": {
