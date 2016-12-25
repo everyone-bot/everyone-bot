@@ -13,6 +13,7 @@ Use the hosted bot, or host your own!
 
 Commands:
 ```
+/start - Display help text
 /in - Opt-in to receive mentions
 /out - Opt-out of receiving mentions
 /everyone - Mention all opted-in users
