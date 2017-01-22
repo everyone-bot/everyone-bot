@@ -5,14 +5,16 @@ const arg = require('../util/arg');
 const User = require('../domain/user');
 
 class EveryoneController extends tg.TelegramBaseController {
-    constructor(groupRepository, mentionBuilder) {
+    constructor(groupRepository, mentionBuilder, statisticsRepository) {
         super();
 
         arg.checkIfExists(groupRepository, 'groupRepository');
         arg.checkIfExists(mentionBuilder, 'mentionBuilder');
+        arg.checkIfExists(statisticsRepository, 'statisticsRepository');
 
         this.groupRepository = groupRepository;
         this.mentionBuilder = mentionBuilder;
+        this.statisticsRepository = statisticsRepository;
     }
 
     everyone($) {
@@ -28,6 +30,9 @@ class EveryoneController extends tg.TelegramBaseController {
                 $.sendMessage(mention);
             });
             
+            // Track statistics
+            this.statisticsRepository.incrementMentions(group.users.length);
+
         }).catch(err => {
             console.log(err);
         });
