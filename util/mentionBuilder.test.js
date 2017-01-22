@@ -1,6 +1,6 @@
 import test from 'ava';
 
-const SettingsRepository = require('./SettingsRepository');
+const SettingsRepository = require('./settingsRepository');
 const MentionBuilder = require('./mentionBuilder');
 const TestUserBuilder = require('./testUserBuilder');
 
