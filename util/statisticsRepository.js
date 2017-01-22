@@ -19,17 +19,20 @@ class StatisticsRepository {
     /**
      * Increments the number of mentions.
      * @param  {number} amount The amount of mentions to increment by.
-     * @return {void}
+     * @return {number}
      */
     incrementMentions(amount) {
         arg.checkIfNumber(amount, 'amount');
         const path = this.firebaseSettings.buildPath('statistics/mentions.json');
 
         return got(path).then((response) => {
-            let mentions = response.body;
+            let mentions = isNaN(response.body) ? 0 : parseInt(response.body);
+            mentions += amount;
 
-            return got.put(path, mentions + amount).then((response) => {
-                return response;
+            return got.put(path, {
+                body: '' + mentions
+            }).then((response) => {
+                return isNaN(response.body) ? 0 : parseInt(response.body);
             });
         });
     }
