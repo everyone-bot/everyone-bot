@@ -32,7 +32,7 @@ Commands:
 | TELEGRAM_API_KEY        | API key for the telegram bot, provided by [@BotFather](https://telegram.me/BotFather)                                    |
 | BOT_WORKERS             | Number of worker threads to use (Default: 1)                                                                             |
 | FIREBASE_PROJECT_NAME   | Firebase project to be used for storage of groups & users.                                                               |
-| IREBASE_DATABASE_SECRET | Auth secret for Firebase to communicate securely.                                                                        |
+| FIREBASE_DATABASE_SECRET | Auth secret for Firebase to communicate securely.                                                                        |
 | MENTIONS_PER_MESSAGE    | Used to chunk the mentions into multiple messages as Telegram doesn't notify the people mentioned after the first 4 - 5. |
 
 ## License
