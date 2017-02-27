@@ -26,6 +26,7 @@ const bot = new tg.Telegram(settings.telegramApiKey, {
 
 bot.router
     .when(new tg.TextCommand('/everyone', 'everyone'), new EveryoneController(groupRepository, mentionBuilder, statisticsRepository))
+    .when(new tg.TextCommand('/anyone', 'anyone'), new EveryoneController(groupRepository, mentionBuilder, statisticsRepository))
     .when(new tg.TextCommand('/in', 'in'), new EveryoneController(groupRepository, mentionBuilder, statisticsRepository))
     .when(new tg.TextCommand('/out', 'out'), new EveryoneController(groupRepository, mentionBuilder, statisticsRepository))
     .when(new tg.TextCommand('/start', 'start'), new OnboardingController());

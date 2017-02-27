@@ -38,6 +38,25 @@ class EveryoneController extends tg.TelegramBaseController {
         });
     }
 
+    anyone($) {
+        this.groupRepository.getGroup($._chatId).then(group => {
+            const users = group.users
+
+            if(!users.length) {
+                $.sendMessage('No users opted in!');
+                return;
+            }
+
+            const randomUser = users[Math.floor(Math.random() * users.length)]
+
+            $.sendMessage(`@${randomUser.username}`)
+            this.statisticsRepository.incrementMentions(1)
+
+        }, err => {
+            console.log(err)
+        })
+    }
+
     in($) {
         try {
             const sender = $._message.from;
@@ -83,6 +102,7 @@ class EveryoneController extends tg.TelegramBaseController {
     get routes() {
         return {
             'everyone': 'everyone',
+            'anyone': 'anyone',
             'in': 'in',
             'out': 'out'
         }
