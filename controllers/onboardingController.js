@@ -1,17 +1,11 @@
-const tg = require('telegram-node-bot');
+module.exports = {
+    start: ctx => {
+        ctx.reply(
+            'Hey! I can help notify everyone in the group when someone needs them. ' +
+                'Everyone who wishes to receive mentions needs to /in to opt-in. All opted-in users can then ' +
+                'be mentioned using /everyone',
+        )
 
-class OnboardingController extends tg.TelegramBaseController {
-    start($) {
-        $.sendMessage('Hey! I can help notify everyone in the group when someone needs them. ' +
-            'Everyone who wishes to receive mentions needs to /in to opt-in. All opted-in users can then ' +
-            'be mentioned using /everyone');
-    }
-
-    get routes() {
-        return {
-            'start': 'start'
-        };
-    }
+        console.log(ctx.from)
+    },
 }
-
-module.exports = OnboardingController;

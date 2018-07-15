@@ -1,92 +1,76 @@
-'use strict';
+const User = require('../domain/user')
 
-const tg = require('telegram-node-bot');
-const arg = require('../util/arg');
-const User = require('../domain/user');
+module.exports = (groupRepository, mentionBuilder, statisticsRepository) => ({
+    everyone: ctx => {
+        groupRepository
+            .getGroup(ctx.chat.id)
+            .then(group => {
+                if (!group.users.length) {
+                    ctx.reply('No users opted in!')
+                    return
+                }
 
-class EveryoneController extends tg.TelegramBaseController {
-    constructor(groupRepository, mentionBuilder, statisticsRepository) {
-        super();
+                const mentions = mentionBuilder.build(group.users)
 
-        arg.checkIfExists(groupRepository, 'groupRepository');
-        arg.checkIfExists(mentionBuilder, 'mentionBuilder');
-        arg.checkIfExists(statisticsRepository, 'statisticsRepository');
+                mentions.forEach(mention => {
+                    ctx.reply(mention)
+                })
 
-        this.groupRepository = groupRepository;
-        this.mentionBuilder = mentionBuilder;
-        this.statisticsRepository = statisticsRepository;
-    }
+                // Track statistics
+                statisticsRepository.incrementMentions(group.users.length)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    },
 
-    everyone($) {
-        this.groupRepository.getGroup($._chatId).then(group => {
-            if(!group.users.length) {
-                $.sendMessage('No users opted in!');
-                return;
-            }
-
-            const mentions = this.mentionBuilder.build(group.users);
-
-            mentions.forEach(mention => {
-                $.sendMessage(mention);
-            });
-            
-            // Track statistics
-            this.statisticsRepository.incrementMentions(group.users.length);
-
-        }).catch(err => {
-            console.log(err);
-        });
-    }
-
-    in($) {
+    in: ctx => {
         try {
-            const sender = $._message.from;
-            const user = new User(sender.id, sender.username);
-            const groupId = $._chatId;
-            
-            this.groupRepository.optIn(user, groupId).then(() => {
-                $.sendMessage(`Thanks for opting in @${user.username}`);
-            }).catch(err => {
-                console.log(err);
-            });
-        } catch(error) {
-            if(error instanceof SyntaxError) {
-                $.sendMessage('Sorry, you\'ll need to set up a username before you can opt in');
+            const user = new User(ctx.from.id, ctx.from.username)
+            const groupId = ctx.chat.id
+
+            groupRepository
+                .optIn(user, groupId)
+                .then(() => {
+                    ctx.reply(`Thanks for opting in @${user.username}`)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        } catch (error) {
+            if (error instanceof SyntaxError) {
+                ctx.reply(
+                    "Sorry, you'll need to set up a username before you can opt in",
+                )
             }
 
-            console.log(error);
-            return;
+            console.log(error)
+            return
         }
-    }
+    },
 
-    out($) {
+    out: ctx => {
         try {
-            const sender = $._message.from;
-            const user = new User(sender.id, sender.username);
-            const groupId = $._chatId;
+            const user = new User(ctx.from.id, ctx.from.username)
+            const groupId = ctx.chat.id
 
-            this.groupRepository.optOut(user, groupId).then(() => {
-                $.sendMessage(`You've been opted out @${user.username}`)
-            }).catch(err => {
-                console.log(err);
-            });
-        } catch(error) {
-            if(error instanceof SyntaxError) {
-                $.sendMessage('Sorry, you\'ll need to set up a username before you can opt in');
+            groupRepository
+                .optOut(user, groupId)
+                .then(() => {
+                    ctx.reply(`You've been opted out @${user.username}`)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        } catch (error) {
+            if (error instanceof SyntaxError) {
+                ctx.reply(
+                    "Sorry, you'll need to set up a username before you can opt in",
+                )
             }
 
-            console.log(error);
-            return;
+            console.log(error)
+            return
         }
-    }
-
-    get routes() {
-        return {
-            'everyone': 'everyone',
-            'in': 'in',
-            'out': 'out'
-        }
-    }
-}
-
-module.exports = EveryoneController;
+    },
+})
