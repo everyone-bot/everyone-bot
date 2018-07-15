@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@types/node@^10.1.2":
+  version "10.5.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.2.tgz#f19f05314d5421fe37e74153254201a7bf00a707"
+
 abbrev@1:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.0.9.tgz#91b4792588a7738c25f35dd6f63752a2f8776135"
@@ -1113,6 +1117,12 @@ debug@^2.1.1, debug@^2.2.0:
   dependencies:
     ms "0.7.2"
 
+debug@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+  dependencies:
+    ms "2.0.0"
+
 debug@~2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.2.0.tgz#f87057e995b1a1f6ae6a4960664137bc56f039da"
@@ -2026,6 +2036,10 @@ ms@0.7.2, ms@^0.7.1:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.2.tgz#ae25cf2512b3885a1d95d7f037868d8431124765"
 
+ms@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
+
 multimatch@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/multimatch/-/multimatch-2.1.0.tgz#9c7906a22fb4c02919e2f5f75161b4cdbd4b2a2b"
@@ -2051,6 +2065,10 @@ nock@^9.0.2:
     mkdirp "^0.5.0"
     propagate "0.4.0"
     qs "^6.0.2"
+
+node-fetch@^2.0.0:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"
 
 node-pre-gyp@^0.6.29:
   version "0.6.31"
@@ -2594,6 +2612,10 @@ rimraf@2, rimraf@~2.5.1, rimraf@~2.5.4:
   dependencies:
     glob "^7.0.5"
 
+sandwich-stream@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/sandwich-stream/-/sandwich-stream-1.0.0.tgz#7830e45797b5933287f1f9b28f871907456262f2"
+
 semver-diff@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/semver-diff/-/semver-diff-2.1.0.tgz#4bbb8437c8d37e4b0cf1a68fd726ec6d645d6d36"
@@ -2795,11 +2817,20 @@ tar@~2.2.1:
     fstream "^1.0.2"
     inherits "2"
 
-telegram-node-bot@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/telegram-node-bot/-/telegram-node-bot-4.0.3.tgz#c6631c1535ad67ece6006647ab99b010ca6bf508"
+telegraf@^3.21.2:
+  version "3.21.2"
+  resolved "https://registry.yarnpkg.com/telegraf/-/telegraf-3.21.2.tgz#192a79e8990297377bf2bf03085cb4d00a20d9a8"
   dependencies:
-    tiny_request latest
+    "@types/node" "^10.1.2"
+    debug "^3.0.0"
+    node-fetch "^2.0.0"
+    sandwich-stream "^1.0.0"
+    telegram-typings "^3.6.0"
+    typescript "^2.8.3"
+
+telegram-typings@^3.6.0:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/telegram-typings/-/telegram-typings-3.6.1.tgz#1288d547f8694b61f1c01c2993e295f3114d9e25"
 
 text-table@^0.2.0:
   version "0.2.0"
@@ -2832,10 +2863,6 @@ time-require@^0.1.2:
 timed-out@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/timed-out/-/timed-out-3.0.0.tgz#ff88de96030ce960eabd42487db61d3add229273"
-
-tiny_request@latest:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/tiny_request/-/tiny_request-1.0.9.tgz#66ee51afa8abd698f17dadaa96a3707cc7165e99"
 
 to-fast-properties@^1.0.1:
   version "1.0.2"
@@ -2874,6 +2901,10 @@ type-detect@^1.0.0:
 type-name@^2.0.1:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/type-name/-/type-name-2.0.2.tgz#efe7d4123d8ac52afff7f40c7e4dec5266008fb4"
+
+typescript@^2.8.3:
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
 
 uid-number@~0.0.6:
   version "0.0.6"

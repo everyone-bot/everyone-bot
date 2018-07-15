@@ -1,6 +1,6 @@
 {
     "telegramApiKey": "<< API KEY HERE >>",
-    "botWorkers": 1,
+    "botUsername": "<< BOT USERNAME >>",
     "firebaseProjectName": "myapp-a15sd4",
     "firebaseDatabaseSecret": "<< FIREBASE DATABASE SECRET >>",
     "mentionsPerMessage": 5
