@@ -2828,12 +2828,6 @@ telegraf@^3.21.2:
     telegram-typings "^3.6.0"
     typescript "^2.8.3"
 
-telegram-node-bot@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/telegram-node-bot/-/telegram-node-bot-4.0.3.tgz#c6631c1535ad67ece6006647ab99b010ca6bf508"
-  dependencies:
-    tiny_request latest
-
 telegram-typings@^3.6.0:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/telegram-typings/-/telegram-typings-3.6.1.tgz#1288d547f8694b61f1c01c2993e295f3114d9e25"
@@ -2869,10 +2863,6 @@ time-require@^0.1.2:
 timed-out@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/timed-out/-/timed-out-3.0.0.tgz#ff88de96030ce960eabd42487db61d3add229273"
-
-tiny_request@latest:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/tiny_request/-/tiny_request-1.0.9.tgz#66ee51afa8abd698f17dadaa96a3707cc7165e99"
 
 to-fast-properties@^1.0.1:
   version "1.0.2"
