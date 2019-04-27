@@ -21,19 +21,41 @@ module.exports = (groupRepository, mentionBuilder, statisticsRepository) => {
                     }
 
                     const mentions = mentionBuilder.build(group.users)
-                    const userMessage = getUserMessage(ctx.message)
+                    const replyPromises = []
 
-                    mentions.forEach((mention, idx) => {
-                        if (idx === mentions.length - 1) {
-                            ctx.reply(mention + ' ' + userMessage)
-                            return
-                        }
-
-                        ctx.reply(mention)
+                    mentions.forEach(mention => {
+                        replyPromises.push(ctx.reply(mention))
                     })
 
                     // Track statistics
                     statisticsRepository.incrementMentions(group.users.length)
+
+                    return Promise.all(replyPromises)
+                })
+                .then((replyDataArray) => {
+                    const userMessage = getUserMessage(ctx.message)
+
+                    if(!userMessage) {
+                        return replyDataArray
+                    }
+
+                    return ctx.reply('@' + ctx.from.username + ':' + userMessage).then(() => {
+                        return replyDataArray
+                    })
+                })
+                .then((replyDataArray) => {
+                    return new Promise(resolve => {
+                        setTimeout(() => {
+                            resolve(replyDataArray)
+                        }, 2000)
+                    })
+                })
+                .then(replyDataArray => {
+                    const messageIdsToDelete = replyDataArray.map(data => data.message_id)
+                    
+                    messageIdsToDelete.forEach(messageId => {
+                        ctx.telegram.deleteMessage(ctx.chat.id, messageId)
+                    })
                 })
                 .catch(err => {
                     console.log(err)
