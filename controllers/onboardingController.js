@@ -5,7 +5,5 @@ module.exports = {
                 'Everyone who wishes to receive mentions needs to /in to opt-in. All opted-in users can then ' +
                 'be mentioned using /everyone',
         )
-
-        console.log(ctx.from)
     },
 }
