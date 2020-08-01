@@ -22,7 +22,11 @@ const bot = new Telegraf(settings.telegramApiKey, {
     username: settings.botUsername,
 })
 
-const onboardingController = require('./controllers/onboardingController')
+const onboardingController = require('./controllers/onboardingController')(
+    groupRepository,
+    settings
+)
+
 const everyoneController = require('./controllers/everyoneController')(
     groupRepository,
     mentionBuilder,
@@ -33,5 +37,8 @@ bot.command('everyone', everyoneController.everyone)
 bot.command('in', everyoneController.in)
 bot.command('out', everyoneController.out)
 bot.command('start', onboardingController.start)
+bot.command('clean', onboardingController.removeInactiveMembers)
+
+bot.on('left_chat_member', onboardingController.userLeaveGroup)
 
 bot.startPolling()

@@ -19,6 +19,7 @@ Commands:
 /in - Opt-in to receive mentions
 /out - Opt-out of receiving mentions
 /everyone - Mention all opted-in users
+/clean - Admin-only command to clean up inactive users
 ```
 
 ## Installation
@@ -31,13 +32,14 @@ Commands:
 
 ## Environment Variables
 
-| Name                     | Description                                                                                                              |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| TELEGRAM_API_KEY         | API key for the telegram bot, provided by [@BotFather](https://telegram.me/BotFather)                                    |
-| BOT_USERNAME             | Username of the live bot on Telegram. Must be without the @ sign.                                                        |
-| FIREBASE_PROJECT_NAME    | Firebase project to be used for storage of groups & users.                                                               |
-| FIREBASE_DATABASE_SECRET | Auth secret for Firebase to communicate securely.                                                                        |
-| MENTIONS_PER_MESSAGE     | Used to chunk the mentions into multiple messages as Telegram doesn't notify the people mentioned after the first 4 - 5. |
+| Name                                   | Description                                                                                                              |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| TELEGRAM_API_KEY                       | API key for the telegram bot, provided by [@BotFather](https://telegram.me/BotFather)                                    |
+| BOT_USERNAME                           | Username of the live bot on Telegram. Must be without the @ sign.                                                        |
+| FIREBASE_PROJECT_NAME                  | Firebase project to be used for storage of groups & users.                                                               |
+| FIREBASE_DATABASE_SECRET               | Auth secret for Firebase to communicate securely.                                                                        |
+| MENTIONS_PER_MESSAGE                   | Used to chunk the mentions into multiple messages as Telegram doesn't notify the people mentioned after the first 4 - 5. |
+| ENABLE_REMOVE_INACTIVE_MEMBERS_COMMAND | Enables the experimental admin-only /clean command                                                                       |
 
 ## License
 
