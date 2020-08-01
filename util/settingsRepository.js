@@ -52,6 +52,15 @@ class SettingsRepository {
             ? Number.parseInt(process.env.MENTIONS_PER_MESSAGE, 10)
             : this._config.mentionsPerMessage
     }
+
+    /**
+     * @return {bool}
+     */
+    get enableRemoveInactiveMembersCommand() {
+        return process.env.ENABLE_REMOVE_INACTIVE_MEMBERS_COMMAND
+            ? Boolean(process.env.ENABLE_REMOVE_INACTIVE_MEMBERS_COMMAND)
+            : this._config.enableRemoveInactiveMembersCommand
+    }   
 }
 
 module.exports = SettingsRepository
