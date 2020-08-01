@@ -10,6 +10,9 @@
     "start:dev": "nodemon .",
     "dev": "npm-run-all --parallel start:dev test:watch"
   },
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aquibm/everyone-bot.git"
