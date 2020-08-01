@@ -1,7 +1,7 @@
 const User = require('../domain/user')
 const AuthorizationError = require('../domain/authorizationError')
 
-module.exports = groupRepository => ({
+module.exports = (groupRepository, settingsRepository) => ({
     start: ctx => {
         ctx.reply(
             'Hey! I can help notify everyone in the group when someone needs them. ' +
@@ -35,6 +35,11 @@ module.exports = groupRepository => ({
     // TODO(AM): This really belongs in a worker at the end of a queue somewhere D:
     removeInactiveMembers: async (ctx) => {
         try {
+            if(!settingsRepository.enableRemoveInactiveMembersCommand) {
+                ctx.reply('Sorry, this command has been temporarily disabled. For more information head over to https://github.com/everyone-bot/everyone-bot')
+                return
+            }
+
             const userId = ctx.from.id
             const groupId = ctx.chat.id
 

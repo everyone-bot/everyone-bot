@@ -3,7 +3,7 @@
  */
 class SettingsRepository {
     /**
-     * @param  {Object} config - Contents of a configuration file to use when environemnt variables are not available.
+     * @param  {Object} config - Contents of a configuration file to use when environment variables are not available.
      * @return {SettingsRepository}
      */
     constructor(config) {

@@ -23,7 +23,8 @@ const bot = new Telegraf(settings.telegramApiKey, {
 })
 
 const onboardingController = require('./controllers/onboardingController')(
-    groupRepository
+    groupRepository,
+    settings
 )
 
 const everyoneController = require('./controllers/everyoneController')(
