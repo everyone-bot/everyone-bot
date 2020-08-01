@@ -84,8 +84,7 @@ module.exports = (groupRepository, settingsRepository) => ({
                     .map(user => user.username)
                     .join(', ')
 
-                ctx.reply(`Failed to remove the following users:`)
-                ctx.reply(erroredUsernames)
+                ctx.reply(`Failed to remove the following users: ${erroredUsernames}`)
             }
         } catch(error) {
             if(error instanceof AuthorizationError) {
