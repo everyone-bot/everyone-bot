@@ -13,7 +13,7 @@ module.exports = (groupRepository, settingsRepository) => ({
     userLeaveGroup: ctx => {
         try {
             const { left_chat_member, chat } = ctx.message
-            const user = new User(left_chat_member.id, left_chat_member.username)
+            const user = new User(left_chat_member.id, left_chat_member.username || left_chat_member.first_name)
             const groupId = chat.id
 
             groupRepository

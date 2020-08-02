@@ -12,8 +12,10 @@ module.exports = (groupRepository, mentionBuilder, statisticsRepository) => {
 
     return {
         everyone: ctx => {
+            const groupId = ctx.chat.id
+
             groupRepository
-                .getGroup(ctx.chat.id)
+                .getGroup(groupId)
                 .then(group => {
                     if (!group.users.length) {
                         ctx.reply('No users opted in!')
@@ -25,11 +27,11 @@ module.exports = (groupRepository, mentionBuilder, statisticsRepository) => {
 
                     mentions.forEach((mention, idx) => {
                         if (idx === mentions.length - 1) {
-                            ctx.reply(mention + ' ' + userMessage)
+                            ctx.replyWithMarkdownV2(`${mention} ${userMessage}`)
                             return
                         }
 
-                        ctx.reply(mention)
+                        ctx.replyWithMarkdownV2(mention)
                     })
 
                     // Track statistics
@@ -42,13 +44,13 @@ module.exports = (groupRepository, mentionBuilder, statisticsRepository) => {
 
         in: ctx => {
             try {
-                const user = new User(ctx.from.id, ctx.from.username)
+                const user = new User(ctx.from.id, ctx.from.username || ctx.from.first_name)
                 const groupId = ctx.chat.id
 
                 groupRepository
                     .optIn(user, groupId)
                     .then(() => {
-                        ctx.reply(`Thanks for opting in @${user.username}`)
+                        ctx.reply(`Thanks for opting in ${user.username}`)
                     })
                     .catch(err => {
                         console.log(err)
@@ -56,7 +58,7 @@ module.exports = (groupRepository, mentionBuilder, statisticsRepository) => {
             } catch (error) {
                 if (error instanceof SyntaxError) {
                     ctx.reply(
-                        "Sorry, you'll need to set up a username before you can opt in",
+                        "Sorry, you don't seem to have a username or a first name D:",
                     )
                 }
 
@@ -67,13 +69,13 @@ module.exports = (groupRepository, mentionBuilder, statisticsRepository) => {
 
         out: ctx => {
             try {
-                const user = new User(ctx.from.id, ctx.from.username)
+                const user = new User(ctx.from.id, ctx.from.username || ctx.from.first_name)
                 const groupId = ctx.chat.id
 
                 groupRepository
                     .optOut(user, groupId)
                     .then(() => {
-                        ctx.reply(`You've been opted out @${user.username}`)
+                        ctx.reply(`You've been opted out ${user.username}`)
                     })
                     .catch(err => {
                         console.log(err)
