@@ -42,3 +42,5 @@ bot.command('clean', onboardingController.removeInactiveMembers)
 bot.on('left_chat_member', onboardingController.userLeaveGroup)
 
 bot.startPolling()
+
+console.log('EveryoneBot has started!')

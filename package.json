@@ -6,8 +6,8 @@
   "scripts": {
     "test": "ava",
     "test:watch": "npm run test -- --watch",
-    "start": "node .",
-    "start:dev": "nodemon .",
+    "start": "ts-node .",
+    "start:dev": "nodemon -x ts-node .",
     "dev": "npm-run-all --parallel start:dev test:watch"
   },
   "engines": {
