@@ -32,7 +32,9 @@
   "homepage": "https://github.com/aquibm/everyone-bot#readme",
   "dependencies": {
     "got": "^11.5.1",
-    "telegraf": "^3.38.0"
+    "telegraf": "^3.38.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
   },
   "devDependencies": {
     "ava": "^0.17.0",
