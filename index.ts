@@ -1,11 +1,15 @@
 'use strict'
 
-const Telegraf = require('telegraf')
-const SettingsRepository = require('./util/settingsRepository')
-const GroupRepository = require('./util/groupRepository')
-const StatisticsRepository = require('./util/statisticsRepository')
-const MentionBuilder = require('./util/mentionBuilder')
-const FirebaseSettings = require('./domain/firebaseSettings')
+import Telegraf from 'telegraf'
+
+import SettingsRepository from './util/settingsRepository'
+import GroupRepository from './util/groupRepository'
+import StatisticsRepository from './util/statisticsRepository'
+import MentionBuilder from './util/mentionBuilder'
+import FirebaseSettings from './domain/firebaseSettings'
+
+import OnboardingController from './controllers/onboardingController'
+import EveryoneController from './controllers/everyoneController'
 
 const config = !process.env.PRODUCTION && require('./config.json')
 const settings = new SettingsRepository(config)
@@ -22,12 +26,12 @@ const bot = new Telegraf(settings.telegramApiKey, {
     username: settings.botUsername,
 })
 
-const onboardingController = require('./controllers/onboardingController')(
+const onboardingController = new OnboardingController(
     groupRepository,
     settings
 )
 
-const everyoneController = require('./controllers/everyoneController')(
+const everyoneController = new EveryoneController(
     groupRepository,
     mentionBuilder,
     statisticsRepository,
@@ -42,3 +46,5 @@ bot.command('clean', onboardingController.removeInactiveMembers)
 bot.on('left_chat_member', onboardingController.userLeaveGroup)
 
 bot.startPolling()
+
+console.log('EveryoneBot has started!')

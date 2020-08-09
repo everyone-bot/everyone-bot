@@ -1,12 +1,23 @@
+export type Config = {
+    telegramApiKey: string,
+    botUsername: string,
+    firebaseProjectName: string,
+    firebaseDatabaseSecret: string,
+    mentionsPerMessage: number,
+    enableRemoveInactiveMembersCommand: boolean
+}
+
 /**
  * Responsible for providing application settings through either environment variables or a config file.
  */
-class SettingsRepository {
+export default class SettingsRepository {
+    _config: Config
+
     /**
-     * @param  {Object} config - Contents of a configuration file to use when environment variables are not available.
+     * @param  {Config} config - Contents of a configuration file to use when environment variables are not available.
      * @return {SettingsRepository}
      */
-    constructor(config) {
+    constructor(config: Config) {
         this._config = config
     }
 
@@ -62,5 +73,3 @@ class SettingsRepository {
             : this._config.enableRemoveInactiveMembersCommand
     }   
 }
-
-module.exports = SettingsRepository
