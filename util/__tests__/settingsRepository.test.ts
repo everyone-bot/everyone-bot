@@ -1,15 +1,7 @@
-import SettingsRepository, { Config } from '../settingsRepository'
+import SettingsRepository from '../settingsRepository'
+import stubConfig from '../__stubs__/config.stub'
 
 describe('Settings repository tests', () => {
-    const stubConfig: Config = {
-        telegramApiKey: 'TELEGRAM_API_KEY',
-        botUsername: 'EVERYONE',
-        firebaseProjectName: 'FIREBASE_PROJECT_NAME',
-        firebaseDatabaseSecret: 'FIREBASE_DATABASE_SECRET',
-        mentionsPerMessage: 5,
-        enableRemoveInactiveMembersCommand: false
-    }
-
     it('should return config values when environment variables don\'t exist', () => {
         const settings = new SettingsRepository(stubConfig)
 

@@ -16,6 +16,10 @@ describe('StatisticsRepository tests', () => {
         got.put.mockReset()
     })
 
+    afterAll(() => {
+        jest.dontMock('got')
+    })
+
     it('should be able to increment mentions', async () => {
         got.mockResolvedValue({ body: '20'})
 
