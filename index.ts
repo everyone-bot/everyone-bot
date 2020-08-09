@@ -26,7 +26,7 @@ const bot = new Telegraf(settings.telegramApiKey, {
     username: settings.botUsername,
 })
 
-const onboardingController = OnboardingController(
+const onboardingController = new OnboardingController(
     groupRepository,
     settings
 )

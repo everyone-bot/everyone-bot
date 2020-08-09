@@ -1,7 +1,7 @@
-import User from '../domain/user'
 import { TelegrafContext } from 'telegraf/typings/context'
 import { IncomingMessage } from 'telegraf/typings/telegram-types'
 
+import User from '../domain/user'
 import GroupRepository from '../util/groupRepository'
 import MentionBuilder from '../util/mentionBuilder'
 import StatisticsRepository from '../util/statisticsRepository'
