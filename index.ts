@@ -31,7 +31,7 @@ const onboardingController = OnboardingController(
     settings
 )
 
-const everyoneController = EveryoneController(
+const everyoneController = new EveryoneController(
     groupRepository,
     mentionBuilder,
     statisticsRepository,
