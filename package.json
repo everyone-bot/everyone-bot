@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --testPathPattern .*\\.test\\.ts",
-    "test:watch": "yarn jest --watch",
+    "test:watch": "yarn test --watch",
     "start": "ts-node .",
     "start:dev": "nodemon -x ts-node .",
     "dev": "npm-run-all --parallel start:dev test:watch"
