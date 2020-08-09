@@ -7,7 +7,7 @@
     "test": "jest --testPathPattern .*\\.test\\.ts",
     "test:watch": "yarn test --watch",
     "start": "ts-node .",
-    "start:dev": "nodemon -x ts-node .",
+    "start:dev": "nodemon -x ts-node . -e ts,json",
     "dev": "npm-run-all --parallel start:dev test:watch"
   },
   "engines": {
