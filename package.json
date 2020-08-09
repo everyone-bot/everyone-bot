@@ -4,8 +4,8 @@
   "description": "Telegram bot to get everyone's attention in a group chat. Like @everyone in other messaging applications.",
   "main": "index.js",
   "scripts": {
-    "test": "ava",
-    "test:watch": "npm run test -- --watch",
+    "test": "jest --testPathPattern .*\\.test\\.ts",
+    "test:watch": "yarn jest --watch",
     "start": "ts-node .",
     "start:dev": "nodemon -x ts-node .",
     "dev": "npm-run-all --parallel start:dev test:watch"
