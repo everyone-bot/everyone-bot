@@ -1,4 +1,4 @@
-import { stringify } from "querystring";
+import { escape } from '../util/escapeMarkdown'
 
 /**
  * Entity to represent a telegram user.
@@ -19,4 +19,12 @@ export default class User {
         this.id = id
         this.username = username
     }
+
+    get name(): string {
+        return escape(this.username)
+    }
+
+    get mention(): string {
+        return `[${this.name}](tg://user?id=${this.id})`
+    }    
 }

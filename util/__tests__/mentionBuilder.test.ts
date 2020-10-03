@@ -1,4 +1,6 @@
 import SettingsRepository from '../settingsRepository'
+import User from '../../domain/user'
+
 import stubConfig from '../__stubs__/config.stub'
 import { getUsers } from '../__stubs__/user.stub'
 
@@ -63,10 +65,22 @@ describe('MentionBuilder tests', () => {
 
         users.forEach(user => {
             const userMention = messages.find(message => 
-                message.indexOf(`[${user.username}](tg://user?id=${user.id})`) !== -1
+                message.indexOf(user.mention) !== -1
             )
 
             expect(userMention).toBeDefined()
         })
     })
+
+    it('should escape special characters in usernames', () => {
+        const user = new User(1337, 'hello_*[]()~`>#+-=|{}.!');
+        const mentionBuilder = new MentionBuilder(settings);
+    
+        const messages = mentionBuilder.build([user]);
+    
+        expect(messages).toHaveLength(1);
+        expect(messages[0]).toEqual(
+          '[hello\\_\\*\\[\\]\\(\\)\\~\\`\\>\\#\\+\\-\\=\\|\\{\\}\\.\\!](tg://user?id=1337) '
+        );
+      });
 })
