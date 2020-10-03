@@ -17,7 +17,7 @@ export default class MentionBuilder {
 
         return userChunks.map((chunk: User[]) => {
             return chunk.reduce((accumulator: string, user: User) => {
-                return `[${user.username}](tg://user?id=${user.id}) ${accumulator}`;
+                return `${user.mention} ${accumulator}`;
             }, '');
         });
     }
