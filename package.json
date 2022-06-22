@@ -33,7 +33,7 @@
   "dependencies": {
     "@types/got": "^9.6.11",
     "@types/node": "^14.0.27",
-    "got": "^11.5.1",
+    "got": "^11.8.5",
     "telegraf": "^3.38.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
